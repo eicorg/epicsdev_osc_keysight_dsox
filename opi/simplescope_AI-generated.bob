@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <display version="2.0.0">
+    <name>simplescope</name>
+    <width>980</width>
+    <height>360</height>
+    <widget type="label" version="2.0.0">
+      <name>title</name>
+      <x>20</x>
+      <y>10</y>
+      <width>220</width>
+      <height>30</height>
+      <text>SimpleScope</text>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>idn_lbl</name>
+      <x>20</x>
+      <y>52</y>
+      <width>140</width>
+      <height>24</height>
+      <text>Scope ID</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>idn</name>
+      <x>170</x>
+      <y>50</y>
+      <width>780</width>
+      <height>26</height>
+      <pv_name>KDSOX:scopeIDN</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>state_lbl</name>
+      <x>20</x>
+      <y>88</y>
+      <width>140</width>
+      <height>24</height>
+      <text>Trigger State</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>state</name>
+      <x>170</x>
+      <y>86</y>
+      <width>180</width>
+      <height>26</height>
+      <pv_name>KDSOX:trigState</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>acq_lbl</name>
+      <x>380</x>
+      <y>88</y>
+      <width>120</width>
+      <height>24</height>
+      <text>Acq Count</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>acq</name>
+      <x>500</x>
+      <y>86</y>
+      <width>110</width>
+      <height>26</height>
+      <pv_name>KDSOX:acqCount</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>lost_lbl</name>
+      <x>640</x>
+      <y>88</y>
+      <width>120</width>
+      <height>24</height>
+      <text>Lost Trigs</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>lost</name>
+      <x>760</x>
+      <y>86</y>
+      <width>110</width>
+      <height>26</height>
+      <pv_name>KDSOX:lostTrigs</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>run_lbl</name>
+      <x>20</x>
+      <y>124</y>
+      <width>140</width>
+      <height>24</height>
+      <text>Run/Stop</text>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>run</name>
+      <x>170</x>
+      <y>122</y>
+      <width>180</width>
+      <height>26</height>
+      <pv_name>KDSOX:instrCtrl</pv_name>
+      <items>
+        <item>Run</item>
+        <item>Stop</item>
+        <item>AutoScale</item>
+        <item>*CLS</item>
+      </items>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>time_lbl</name>
+      <x>380</x>
+      <y>124</y>
+      <width>160</width>
+      <height>24</height>
+      <text>Time/Div [s/div]</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>time</name>
+      <x>540</x>
+      <y>122</y>
+      <width>120</width>
+      <height>26</height>
+      <pv_name>KDSOX:timePerDiv</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>trig_lvl_lbl</name>
+      <x>680</x>
+      <y>124</y>
+      <width>120</width>
+      <height>24</height>
+      <text>Trig Level [V]</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>trig_lvl</name>
+      <x>800</x>
+      <y>122</y>
+      <width>120</width>
+      <height>26</height>
+      <pv_name>KDSOX:trigLevel</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>wf_lbl</name>
+      <x>20</x>
+      <y>164</y>
+      <width>140</width>
+      <height>24</height>
+      <text>CH1 Waveform</text>
+    </widget>
+    <widget type="xyplot" version="3.0.0">
+      <name>wf_plot</name>
+      <x>20</x>
+      <y>190</y>
+      <width>930</width>
+      <height>150</height>
+      <x_axis>
+        <title>Samples</title>
+      </x_axis>
+      <y_axes>
+        <y_axis>
+          <title>Volts</title>
+        </y_axis>
+      </y_axes>
+      <traces>
+        <trace>
+          <name>CH1</name>
+          <y_pv>KDSOX:c01Waveform</y_pv>
+        </trace>
+      </traces>
+    </widget>
+  </display>

@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <display version="2.0.0">
+    <name>keysight</name>
+    <width>980</width>
+    <height>360</height>
+    <widget type="label" version="2.0.0">
+      <name>title</name>
+      <x>20</x>
+      <y>10</y>
+      <width>220</width>
+      <height>30</height>
+      <text>SimpleScope</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>scopeIDN</name>
+      <x>120</x>
+      <y>10</y>
+      <width>270</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:scopeIDN</pv_name>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>dateTime</name>
+      <x>410</x>
+      <y>10</y>
+      <width>140</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:dateTime</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>Save</name>
+      <x>590</x>
+      <y>10</y>
+      <width>50</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:saveSetup</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>slot_lbl</name>
+      <x>640</x>
+      <y>10</y>
+      <width>80</width>
+      <height>20</height>
+      <text>setup to slot:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>setupSlot</name>
+      <x>720</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:setupSlot</pv_name>
+      <format>1</format>
+      <precision>0</precision>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>Restore</name>
+      <x>760</x>
+      <y>10</y>
+      <width>70</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:restoreSetup</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>state_lbl</name>
+      <x>20</x>
+      <y>38</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Trig State:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>trigState</name>
+      <x>100</x>
+      <y>38</y>
+      <width>40</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:trigState</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>sleep_lbl</name>
+      <x>150</x>
+      <y>38</y>
+      <width>40</width>
+      <height>20</height>
+      <text>Sleep:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>sleep</name>
+      <x>190</x>
+      <y>38</y>
+      <width>60</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:sleep</pv_name>
+      <precision>2</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>cycleTime</name>
+      <x>260</x>
+      <y>38</y>
+      <width>60</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:cycleTime</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>acq_lbl</name>
+      <x>380</x>
+      <y>38</y>
+      <width>80</width>
+      <height>20</height>
+      <text>Acq Count:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>acqCount</name>
+      <x>460</x>
+      <y>38</y>
+      <width>60</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:acqCount</pv_name>
+      <format>1</format>
+      <precision>0</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>lost_lbl</name>
+      <x>540</x>
+      <y>38</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Lost Trigs:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>lostTrigs</name>
+      <x>620</x>
+      <y>38</y>
+      <width>60</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:lostTrigs</pv_name>
+      <format>1</format>
+      <precision>0</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>run_lbl</name>
+      <x>20</x>
+      <y>60</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Run/Stop:</text>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>server</name>
+      <x>100</x>
+      <y>60</y>
+      <width>80</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:server</pv_name>
+      <items>
+        <item>Start</item>
+        <item>Stop</item>
+        <item>Clear</item>
+        <item>Exit</item>
+        <item>Started</item>
+        <item>Stopped</item>
+        <item>Exited</item>
+      </items>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>time_lbl</name>
+      <x>200</x>
+      <y>60</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Time/Div:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>timePerDiv</name>
+      <x>270</x>
+      <y>60</y>
+      <width>110</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:timePerDiv</pv_name>
+      <format>2</format>
+      <precision>1</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>reclen_lbl</name>
+      <x>400</x>
+      <y>60</y>
+      <width>80</width>
+      <height>20</height>
+      <text>RecLength:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>reclenR</name>
+      <x>480</x>
+      <y>60</y>
+      <width>70</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:recLengthR</pv_name>
+      <format>1</format>
+      <precision>0</precision>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>reclenS</name>
+      <x>560</x>
+      <y>60</y>
+      <width>80</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:recLengthS</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>samplingRate_lbl</name>
+      <x>650</x>
+      <y>60</y>
+      <width>60</width>
+      <height>20</height>
+      <text>SRate:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>samplingRate</name>
+      <x>700</x>
+      <y>60</y>
+      <width>80</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:samplingRate</pv_name>
+      <format>2</format>
+      <precision>1</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>trigSource_lbl</name>
+      <x>20</x>
+      <y>90</y>
+      <width>90</width>
+      <height>20</height>
+      <text>Trigger:</text>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>trigSource</name>
+      <x>100</x>
+      <y>90</y>
+      <width>90</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:trigSource</pv_name>
+      <items>
+        <item>CHAN1</item>
+        <item>CHAN2</item>
+        <item>CHAN3</item>
+        <item>CHAN4</item>
+        <item>EXT</item>
+        <item>LINE</item>
+      </items>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>trig_lvl_lbl</name>
+      <x>230</x>
+      <y>90</y>
+      <width>40</width>
+      <height>20</height>
+      <text>Level:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>trigLevel</name>
+      <x>280</x>
+      <y>90</y>
+      <width>70</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:trigLevel</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>trigSlope_lbl</name>
+      <x>360</x>
+      <y>90</y>
+      <width>60</width>
+      <height>20</height>
+      <text>Slope:</text>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>trigSlope</name>
+      <x>420</x>
+      <y>90</y>
+      <width>70</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:trigSlope</pv_name>
+      <items>
+        <item>POS</item>
+        <item>NEG</item>
+        <item>EITH</item>
+      </items>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>trigMode_lbl</name>
+      <x>500</x>
+      <y>90</y>
+      <width>60</width>
+      <height>20</height>
+      <text>Mode:</text>
+    </widget>
+    <widget type="combo" version="2.0.0">
+      <name>trigMode</name>
+      <x>560</x>
+      <y>90</y>
+      <width>80</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:trigMode</pv_name>
+      <items>
+        <item>NORM</item>
+        <item>AUTO</item>
+      </items>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>trigDelay_lbl</name>
+      <x>660</x>
+      <y>90</y>
+      <width>60</width>
+      <height>20</height>
+      <text>Delay:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>trigDelay</name>
+      <x>720</x>
+      <y>90</y>
+      <width>80</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:trigDelay</pv_name>
+      <format>2</format>
+    </widget>
+    <widget type="xyplot" version="3.0.0">
+      <name>wf_plot</name>
+      <x>10</x>
+      <y>110</y>
+      <width>930</width>
+      <height>450</height>
+      <show_toolbar>true</show_toolbar>
+      <x_axis>
+        <title>Time [s]</title>
+        <autoscale>true</autoscale>
+        <show_grid>true</show_grid>
+      </x_axis>
+      <y_axes>
+        <y_axis>
+          <title>Divisions</title>
+          <minimum>-4.0</minimum>
+          <maximum>4.0</maximum>
+          <show_grid>true</show_grid>
+        </y_axis>
+      </y_axes>
+      <traces>
+        <trace>
+          <name>CH1</name>
+          <x_pv>pva://keysight0:tAxis</x_pv>
+          <y_pv>pva://keysight0:c01Waveform</y_pv>
+        </trace>
+        <trace>
+          <name>CH2</name>
+          <x_pv>pva://keysight0:tAxis</x_pv>
+          <y_pv>pva://keysight0:c02Waveform</y_pv>
+        </trace>
+        <trace>
+          <name>CH3</name>
+          <x_pv>pva://keysight0:tAxis</x_pv>
+          <y_pv>pva://keysight0:c03Waveform</y_pv>
+        </trace>
+        <trace>
+          <name>CH4</name>
+          <x_pv>pva://keysight0:tAxis</x_pv>
+          <y_pv>pva://keysight0:c04Waveform</y_pv>
+        </trace>
+      </traces>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>vpd_lbl</name>
+      <x>10</x>
+      <y>560</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Volts/Div:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c01VoltsPerDiv</name>
+      <x>90</x>
+      <y>560</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c01VoltsPerDiv</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c02VoltsPerDiv</name>
+      <x>210</x>
+      <y>560</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c02VoltsPerDiv</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c03VoltsPerDiv</name>
+      <x>330</x>
+      <y>560</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c03VoltsPerDiv</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c04VoltsPerDiv</name>
+      <x>450</x>
+      <y>560</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c04VoltsPerDiv</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>voff_lbl</name>
+      <x>10</x>
+      <y>585</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Offset:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c01Offset</name>
+      <x>90</x>
+      <y>585</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c01Offset</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c02Offset</name>
+      <x>210</x>
+      <y>585</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c02Offset</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c03Offset</name>
+      <x>330</x>
+      <y>585</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c03Offset</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>c04Offset</name>
+      <x>450</x>
+      <y>585</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c04Offset</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>OnOff_lbl</name>
+      <x>10</x>
+      <y>610</y>
+      <width>70</width>
+      <height>20</height>
+      <text>On/Off:</text>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>c01OnOff</name>
+      <x>90</x>
+      <y>610</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c01OnOff</pv_name>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>c02OnOff</name>
+      <x>210</x>
+      <y>610</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c02OnOff</pv_name>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>c03OnOff</name>
+      <x>330</x>
+      <y>610</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c03OnOff</pv_name>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>c04OnOff</name>
+      <x>450</x>
+      <y>610</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c04OnOff</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>mean_lbl</name>
+      <x>10</x>
+      <y>635</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Mean [V]:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c01Mean</name>
+      <x>90</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c01Mean</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c02Mean</name>
+      <x>210</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c02Mean</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c03Mean</name>
+      <x>330</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c03Mean</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c04Mean</name>
+      <x>450</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c04Mean</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>rms_lbl</name>
+      <x>10</x>
+      <y>660</y>
+      <width>70</width>
+      <height>20</height>
+      <text>RMS [V]:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c01RMS</name>
+      <x>90</x>
+      <y>660</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c01RMS</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c02RMS</name>
+      <x>210</x>
+      <y>660</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c02RMS</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c03RMS</name>
+      <x>330</x>
+      <y>660</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c03RMS</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c04RMS</name>
+      <x>450</x>
+      <y>660</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c04RMS</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>p2p_lbl</name>
+      <x>10</x>
+      <y>685</y>
+      <width>70</width>
+      <height>20</height>
+      <text>P2P [V]:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c01Peak2Peak</name>
+      <x>90</x>
+      <y>685</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c01Peak2Peak</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c02Peak2Peak</name>
+      <x>210</x>
+      <y>685</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c02Peak2Peak</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c03Peak2Peak</name>
+      <x>330</x>
+      <y>685</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c03Peak2Peak</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c04Peak2Peak</name>
+      <x>450</x>
+      <y>685</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c04Peak2Peak</pv_name>
+      <format>3</format>
+      <precision>3</precision>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>scpi_lbl</name>
+      <x>10</x>
+      <y>715</y>
+      <width>50</width>
+      <height>20</height>
+      <text>SCPI:</text>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>instrCmdS</name>
+      <x>50</x>
+      <y>715</y>
+      <width>200</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:instrCmdS</pv_name>
+    </widget>
+    <widget type="textentry" version="2.0.0">
+      <name>instrCmdR</name>
+      <x>260</x>
+      <y>715</y>
+      <width>550</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:instrCmdR</pv_name>
+    </widget>
+  </display>

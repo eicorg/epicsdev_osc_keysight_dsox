@@ -1,0 +1,10 @@
+[project]
+name = "keysight_dsox"
+version = "0.0.1"
+description = "EPICS PVAccess server for Keysight (Agilent) oscilloscopes DSO-X"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
