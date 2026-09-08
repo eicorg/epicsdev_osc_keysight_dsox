@@ -1,6 +1,6 @@
 # keysight_dsox
 
-EPICS PVAccess server for Keysight (Agilent) DSO-X oscilloscopes (may support other series).
+EPICS PVAccess server for Keysight (Agilent) DSO-X oscilloscopes (may support other series). Server supports both USB and Ethernet connections.
 
 <img src="docs/keysight_dsox.jpg" width="50%">
 
@@ -22,6 +22,7 @@ This module connects to a scope via VISA/SCPI, publishes waveform and settings P
 
 `USB0::2391::6052::MY51330356::0::INSTR`
 
+
 ## Requirements
 
 - Python 3.10+
@@ -34,11 +35,11 @@ This module connects to a scope via VISA/SCPI, publishes waveform and settings P
 
 From this package directory:
 
-`python -m keysight_dsox`
+`python -m epicsdev_osc_keysight_dsox`
 
 Typical usage:
 
-`python -m keysight_dsox -r "USB0::2391::6052::MY51330356::0::INSTR" -d keysight -i 0 -C 4 -v`
+`python -m epicsdev_osc_keysight_dsox -r "USB0::2391::6052::MY51330356::0::INSTR" -d keysight -i 0 -C 4 -v`
 
 This creates PVs with prefix `<device><index>:` (default: `keysight0:`).
 
@@ -70,12 +71,12 @@ With default prefix `keysight0:`:
 
 A simple screen generator is included:
 
-- Source: `screens/generate_simplescope.py`
-- Output: `screens/simplescope.bob`
+- Source: `opi/generate_simplescope.py`
+- Output: `opi/simplescope.bob`
 
 Generate with:
 
-`python screens/generate_simplescope.py --prefix 'keysight0:'`
+`python opi/generate_simplescope.py --prefix 'keysight0:'`
 
 ## Notes
 

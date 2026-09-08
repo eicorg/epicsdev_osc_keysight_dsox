@@ -1,8 +1,27 @@
 [project]
-name = "keysight_dsox"
-version = "0.0.1"
+name = "epicsdev_osc_keysight_dsox"
+version = "0.0.3"
+authors = [
+	{ name="Andrey Sukhanov", email="sukhanov@bnl.gov" },
+]
 description = "EPICS PVAccess server for Keysight (Agilent) oscilloscopes DSO-X"
-dependencies = []
+readme = "README.md"
+requires-python = ">=3.10"
+classifiers = [
+	"Programming Language :: Python :: 3",
+	"License :: OSI Approved :: BSD License",
+	"Operating System :: OS Independent",
+]
+dependencies = [
+	"epicsdev>=1.0.2",
+	"numpy",
+	"pyvisa-py",
+]
+
+[project.optional-dependencies]
+opi = [
+	"phoebusgen",
+]
 
 [build-system]
 requires = ["hatchling"]
