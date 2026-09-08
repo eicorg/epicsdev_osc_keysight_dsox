@@ -20,8 +20,11 @@ This module connects to a scope via VISA/SCPI, publishes waveform and settings P
 
 ## Default VISA resource
 
-`USB0::2391::6052::MY51330356::0::INSTR`
-
+`USB0::2391::6052::MY51330356::0::INSTR`<br>
+For Ethernet:<br>
+`TCPIP::192.168.27.31::INSTR`<br>
+or<br>
+`TCPIP::192.168.27.31::SOCKET`<br>
 
 ## Requirements
 
@@ -31,9 +34,8 @@ This module connects to a scope via VISA/SCPI, publishes waveform and settings P
 - a VISA backend (typically `pyvisa-py`)
 - `epicsdev` and its EPICS/PVA dependency stack (`p4p`)
 
-## Run
-
-From this package directory:
+## Install and Run
+`pip install epicsdev_osc_keysight_dsox`
 
 `python -m epicsdev_osc_keysight_dsox`
 
