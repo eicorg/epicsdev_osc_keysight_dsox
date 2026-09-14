@@ -489,9 +489,49 @@
       <pv_name>pva://keysight0:c04OnOff</pv_name>
     </widget>
     <widget type="label" version="2.0.0">
-      <name>mean_lbl</name>
+      <name>min_lbl</name>
       <x>10</x>
       <y>635</y>
+      <width>70</width>
+      <height>20</height>
+      <text>Min [V]:</text>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c01Min</name>
+      <x>90</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c01Min</pv_name>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c02Min</name>
+      <x>210</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c02Min</pv_name>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c03Min</name>
+      <x>330</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c03Min</pv_name>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>c04Min</name>
+      <x>450</x>
+      <y>635</y>
+      <width>100</width>
+      <height>20</height>
+      <pv_name>pva://keysight0:c04Min</pv_name>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>mean_lbl</name>
+      <x>10</x>
+      <y>660</y>
       <width>70</width>
       <height>20</height>
       <text>Mean [V]:</text>
@@ -499,7 +539,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c01Mean</name>
       <x>90</x>
-      <y>635</y>
+      <y>660</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c01Mean</pv_name>
@@ -509,7 +549,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c02Mean</name>
       <x>210</x>
-      <y>635</y>
+      <y>660</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c02Mean</pv_name>
@@ -519,7 +559,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c03Mean</name>
       <x>330</x>
-      <y>635</y>
+      <y>660</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c03Mean</pv_name>
@@ -529,7 +569,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c04Mean</name>
       <x>450</x>
-      <y>635</y>
+      <y>660</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c04Mean</pv_name>
@@ -539,7 +579,7 @@
     <widget type="label" version="2.0.0">
       <name>rms_lbl</name>
       <x>10</x>
-      <y>660</y>
+      <y>685</y>
       <width>70</width>
       <height>20</height>
       <text>RMS [V]:</text>
@@ -547,7 +587,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c01RMS</name>
       <x>90</x>
-      <y>660</y>
+      <y>685</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c01RMS</pv_name>
@@ -557,7 +597,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c02RMS</name>
       <x>210</x>
-      <y>660</y>
+      <y>685</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c02RMS</pv_name>
@@ -567,7 +607,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c03RMS</name>
       <x>330</x>
-      <y>660</y>
+      <y>685</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c03RMS</pv_name>
@@ -577,7 +617,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c04RMS</name>
       <x>450</x>
-      <y>660</y>
+      <y>685</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c04RMS</pv_name>
@@ -587,7 +627,7 @@
     <widget type="label" version="2.0.0">
       <name>p2p_lbl</name>
       <x>10</x>
-      <y>685</y>
+      <y>710</y>
       <width>70</width>
       <height>20</height>
       <text>P2P [V]:</text>
@@ -595,7 +635,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c01Peak2Peak</name>
       <x>90</x>
-      <y>685</y>
+      <y>710</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c01Peak2Peak</pv_name>
@@ -605,7 +645,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c02Peak2Peak</name>
       <x>210</x>
-      <y>685</y>
+      <y>710</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c02Peak2Peak</pv_name>
@@ -615,7 +655,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>c03Peak2Peak</name>
       <x>330</x>
-      <y>685</y>
+      <y>710</y>
       <width>100</width>
       <height>20</height>
       <pv_name>pva://keysight0:c03Peak2Peak</pv_name>

@@ -27,3 +27,6 @@ opi = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[project.urls]
+"Homepage" = "https://github.com/eicorg/epicsdev_osc_keysight_dsox"
+"Bug Tracker" = "https://github.com/eicorg/epicsdev_osc_keysight_dsox"

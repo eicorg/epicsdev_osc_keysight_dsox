@@ -1,6 +1,6 @@
 """EPICS PVAccess server for Keysight DSO-X oscilloscopes."""
 # pylint: disable=invalid-name
-__version__ = 'v0.0.3 26-08-25'# No Threadlock, because it is single-threaded. Y axis min/max fixed to -4.0/4.0 
+__version__ = 'v0.0.4 26-09-13'# Offset is not updated from scope.
 import sys
 import time
 from time import perf_counter as timer
@@ -93,10 +93,10 @@ def myPVDefs():
             {F: 'WD', SCPI: ':CHANnel<n>:COUPling', SET: set_scpi}],
         ['c<n>VoltsPerDiv', 'Vertical scale', 1e-3,
             {F: 'W', U: 'V/div', SCPI: ':CHANnel<n>:SCALe', SET: set_scpi, LL: 1e-3, LH: 20.0}],
-        ['c<n>Offset', 'Vertical negative offset', 0.0,
-            {F: 'W', U: 'div', SCPI: ':CHANnel<n>:OFFSet', SET: set_scpi}],
-        ['c<n>Waveform', 'Waveform array', [0.0], {U: 'V'}],
+        ['c<n>Offset', 'Vertical offset', 0.0, {F:'W', U:'V', LL:-10., LH:10.}],
+        ['c<n>Waveform', 'Waveform array in display divisions', [0.0], {U: 'div'}],
         ['c<n>Mean', 'Mean of waveform', 0.0, {U: 'V'}],
+        ['c<n>Min', 'Waveform minimum', 0., {U:'V'}],
         ['c<n>Peak2Peak', 'Peak-to-peak amplitude', 0.0, {U: 'V', **alarm}],
         ['c<n>RMS', 'RMS of waveform', 0.0, {U: 'V'}],
     ]
@@ -381,16 +381,16 @@ def acquire_waveforms():
                 C_.prevYpreamble[ich] = (yincr, yorig, yref, voltsPerDiv)
             voltsPerDiv = C_.prevYpreamble[ich][3]
             #print(f'CH{ch} preamble: yincr={yincr}, yorig={yorig}, yref={yref}')
-
-            samplesv = (data - yref) * yincr # convert to divisions
+            samplesv = (data - yref) * yincr # convert to volts
             #print(f"mean data: {data.mean()}, samplesv: {samplesv.mean()}")
-            samplesd = (samplesv/voltsPerDiv).astype(np.float32)
+            voffset = edev.pvv(f'c{ch:02}Offset')
+            samplesd = ((samplesv - voffset)/voltsPerDiv).astype(np.float32)
             t0 = timer()
             edev.publish(f'c{ch:02d}Waveform', samplesd, t=C_.trigTime)
             edev.publish(f'c{ch:02d}Peak2Peak', float(np.ptp(samplesv)), t=C_.trigTime)
             edev.publish(f'c{ch:02d}Mean', float(np.mean(samplesv)), t=C_.trigTime)
             edev.publish(f'c{ch:02d}RMS', float(np.std(samplesv)), t=C_.trigTime)
-            edev.publish(f'c{ch:02d}Offset', yorig, t=C_.trigTime, ifChanged=True)
+            edev.publish(f'c{ch:02d}Min', float(np.min(samplesv)), t=C_.trigTime)
             ts_publish += timer() - t0
 
         except VisaIOError:
