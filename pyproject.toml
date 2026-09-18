@@ -13,7 +13,7 @@ classifiers = [
 	"Operating System :: OS Independent",
 ]
 dependencies = [
-	"epicsdev>=1.0.2",
+	"epicsdev>=1.0.4",
 	"numpy",
 	"pyvisa-py",
 ]

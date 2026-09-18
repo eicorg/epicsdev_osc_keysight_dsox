@@ -1,6 +1,6 @@
 """EPICS PVAccess server for Keysight DSO-X oscilloscopes."""
 # pylint: disable=invalid-name
-__version__ = 'v0.0.4 26-09-13'# Offset is not updated from scope.
+__version__ = 'v0.0.4 26-09-18'# timing PV corrected, added stopStart option
 import sys
 import time
 from time import perf_counter as timer
@@ -16,12 +16,15 @@ from epicsdev import epicsdev as edev
 MAX_CHANNELS = 8
 # Keysight DSO-X family typically uses 10 horizontal divisions.
 NDIVSX = 10
+BigEndian = False# Defined in configure_scope(WFMOUTPRE:BYT_Or LSB)
 DEFAULT_VISA_RESOURCE = 'USB0::2391::6052::MY51330356::0::INSTR'
 
 IF_CHANGED = True
 ElapsedTime = {
     'trigger_detection': 0.0,
     'acquire_wf': 0.0,
+    'preamble': 0.0,
+    'query_wf': 0.0,
     'publish_wf': 0.0,
 }
 
@@ -93,7 +96,7 @@ def myPVDefs():
             {F: 'WD', SCPI: ':CHANnel<n>:COUPling', SET: set_scpi}],
         ['c<n>VoltsPerDiv', 'Vertical scale', 1e-3,
             {F: 'W', U: 'V/div', SCPI: ':CHANnel<n>:SCALe', SET: set_scpi, LL: 1e-3, LH: 20.0}],
-        ['c<n>Offset', 'Vertical offset', 0.0, {F:'W', U:'V', LL:-10., LH:10.}],
+        ['c<n>Offset', 'Vertical offset', 0.0, {F:'W', U:'div', LL:-10., LH:10.}],
         ['c<n>Waveform', 'Waveform array in display divisions', [0.0], {U: 'div'}],
         ['c<n>Mean', 'Mean of waveform', 0.0, {U: 'V'}],
         ['c<n>Min', 'Waveform minimum', 0., {U:'V'}],
@@ -312,6 +315,7 @@ def update_scopeParameters():
 
 def trigger_is_detected():
     """Check trigger state and decide when to read waveform."""
+    ts = timer()
     try:
         r = scopeCmd(':TER?')
         if r != C_.trigState:
@@ -320,46 +324,59 @@ def trigger_is_detected():
     except VisaIOError:
         handle_exception('in trigger_is_detected')
         return False
+    ElapsedTime['trigger_detection'] = round(timer() - ts, 6)
     #print(f'Trigger state: {type(trigState),trigState}')
     return C_.trigState=='+1'
 
+#``````````````````Acquisition-related functions``````````````````````````````
+def _acquire(startStop = 'Start'):
+    """Start or stop acquisition"""
+    cmd = ':RUN' if startStop == 'Start' else ':STOP'
+    try:
+        scopeCmd(cmd)
+    except VisaIOError:
+        handle_exception(f'in _acquire({startStop})')
+
 def acquire_waveforms():
     """Acquire waveform data for enabled channels and publish PVs."""
-    ts_total = timer()
-    ts_publish = 0.0
-
     refresh_channelsEnabled()
 
     C_.trigTime = time.time()# TODO: get trigtime from scope if possible
 
     edev.publish('acqCount', edev.pvv('acqCount') + 1)
+    ElapsedTime['acquire_wf'] = timer()
+    ElapsedTime['preamble'] = 0.
+    ElapsedTime['query_wf'] = 0.
+    ElapsedTime['publish_wf'] = 0.
 
-    try:
-        C_.scope.write(':STOP')
-    except VisaIOError:
-        handle_exception('stopping scope in acquire_waveforms')
-        return
-
+    if pargs.stopStart:
+        _acquire('Stop')# Stop acquisition to freeze waveform data for reading
     recLength = 0
     for ch in C_.channelsEnabled:
+        ts = timer()
         try:
             C_.scope.write(f':WAVeform:SOURce CHANnel{ch}')
             pre = C_.scope.query(':WAVeform:PREamble?').strip().split(',')
-            data = C_.scope.query_binary_values(':WAVeform:DATA?', datatype='H',
-                container=np.array)
+
+            ts1 = timer()
+            ElapsedTime['preamble'] += ts1 - ts
+            binWave = C_.scope.query_binary_values(':WAVeform:DATA?', datatype='H',
+                is_big_endian=BigEndian, container=np.array)
+            ts2 = timer()
+            ElapsedTime['query_wf'] += ts2 - ts1
 
             if len(pre) < 10:
                 edev.printw(f'Unexpected preamble for CH{ch}: {pre}')
                 continue
-            edev.printvv(f'received waveform for CH{ch}: {len(data)} points')
+            edev.printvv(f'received waveform for CH{ch}: {len(binWave)} points')
             #print(f'CH{ch} preamble: {pre}')
 
             # Update tAxis PV if waveform geometry changed.
             xincr, xorig, xref = np.array(np.float32(pre[4:7]), dtype=np.float32)
-            recLength = len(data)
+            recLength = len(binWave)
             if (xincr, xorig, xref, recLength) != C_.prevXpreamble:
                 #print(f'Waveform geometry changed: xincr={xincr}, xorig={xorig}, xref={xref}, recLength={recLength}')
-                taxis = (np.arange(len(data)) - xref) * xincr + xorig
+                taxis = (np.arange(len(binWave)) - xref) * xincr + xorig
                 edev.publish('tAxis', taxis.tolist(), t=C_.trigTime)
                 edev.publish('samplingRate', 1.0 / xincr, t=C_.trigTime, ifChanged=True)
                 r = scopeCmd(':TIMebase:SCALe?')
@@ -381,38 +398,28 @@ def acquire_waveforms():
                 C_.prevYpreamble[ich] = (yincr, yorig, yref, voltsPerDiv)
             voltsPerDiv = C_.prevYpreamble[ich][3]
             #print(f'CH{ch} preamble: yincr={yincr}, yorig={yorig}, yref={yref}')
-            samplesv = (data - yref) * yincr # convert to volts
-            #print(f"mean data: {data.mean()}, samplesv: {samplesv.mean()}")
+            samplesv = (binWave - yref) * yincr # convert to volts
+            #print(f"mean binWave: {binWave.mean()}, samplesv: {samplesv.mean()}")
             voffset = edev.pvv(f'c{ch:02}Offset')
-            samplesd = ((samplesv - voffset)/voltsPerDiv).astype(np.float32)
+            samplesd = ((samplesv + voffset)/voltsPerDiv).astype(np.float32)
             t0 = timer()
             edev.publish(f'c{ch:02d}Waveform', samplesd, t=C_.trigTime)
             edev.publish(f'c{ch:02d}Peak2Peak', float(np.ptp(samplesv)), t=C_.trigTime)
             edev.publish(f'c{ch:02d}Mean', float(np.mean(samplesv)), t=C_.trigTime)
             edev.publish(f'c{ch:02d}RMS', float(np.std(samplesv)), t=C_.trigTime)
             edev.publish(f'c{ch:02d}Min', float(np.min(samplesv)), t=C_.trigTime)
-            ts_publish += timer() - t0
-
+            ElapsedTime['publish_wf'] += timer() - ts2
         except VisaIOError:
             handle_exception(f'in acquire_waveforms channel {ch}')
             break
-
-    try:
-        C_.scope.write(':RUN')
-    except VisaIOError:
-        handle_exception('restarting scope in acquire_waveforms')
-
-    ElapsedTime['publish_wf'] = round(ts_publish, 6)
-    ElapsedTime['acquire_wf'] = round(timer() - ts_total, 6)
+    ElapsedTime['acquire_wf'] = timer() - ElapsedTime['acquire_wf']
+    if pargs.stopStart:
+        _acquire('Start')# Restart acquisition after reading waveforms
 
 def periodic_update():
     """Infrequent updates."""
     update_scopeParameters()
-    edev.publish('timing', [
-        ElapsedTime['trigger_detection'],
-        ElapsedTime['acquire_wf'],
-        ElapsedTime['publish_wf'],
-    ])
+    edev.publish('timing', [(round(i,6)) for i in ElapsedTime.values()])
 
 def poll():
     """Device polling function."""
@@ -449,10 +456,13 @@ if __name__ == '__main__':
         'PV name for logging put operations. Empty means default putlog:dump.')
     parser.add_argument('-r', '--resource', default=DEFAULT_VISA_RESOURCE, help=
         'VISA resource string for the scope.')
+    parser.add_argument('-s', '--stopStart', action='store_false', help=
+        'If given: do not stop acquisition when reading waveforms.')
     parser.add_argument('-v', '--verbose', action='count', default=0, help=
         'Increase verbosity (-vv for more).')
-
     pargs = parser.parse_args()
+    print(f'stopStart = {pargs.stopStart}')
+
     if pargs.putlogPV == '':
         pargs.putlogPV = 'putlog:dump'
 
@@ -478,13 +488,16 @@ if __name__ == '__main__':
         f'Server for {pargs.prefix} started. Sleeping per cycle: {repr(edev.pvv("sleep"))} S.'
     )
 
-    while True:
-        state = edev.serverState()
-        if state.startswith('Exit'):
-            break
-        if not state.startswith('Stop'):
-            poll()
-        if not edev.sleep():
-            periodic_update()
-
+    try:
+        while True:
+            state = edev.serverState()
+            if state.startswith('Exit'):
+                break
+            if not state.startswith('Stop'):
+                poll()
+            if not edev.sleep():
+                periodic_update()
+    except KeyboardInterrupt:
+        edev.printi('Keyboard interrupt received, exiting main loop...')
+        edev.set_server('Exit')
     edev.printi('Server is exited')
